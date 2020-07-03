@@ -1,0 +1,38 @@
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+body {
+  font-family: 'Proxima Nova', Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  color: #1a1d21;
+}
+
+
+/* BTN */
+.btn {
+  text-transform: uppercase !important;
+  background-color: #cc1c21 !important;
+  border-color: #c31a1f !important;
+  border-radius: 0px !important;
+  color: #e0e0e0 !important;
+  padding: 12px 70px !important;
+  margin: 0 auto;
+  font-weight: 700 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  letter-spacing: 1.2px;
+  font-size: 10px !important;
+  line-height: 1.6 !important;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.btn:hover {
+  background-color: white;
+  color: red;
+  filter: brightness(90%);
+}
