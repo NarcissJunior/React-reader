@@ -18,16 +18,16 @@ const TableHead = () => {
 }
 
 const TableBody = props => {
-    const linhas = props.personagens.map((linha, index) => {
+    const linhas = props.characters.map((linha) => {
         return (
-            <tr key={index}>
+            <tr key={linha.id}>
                 <td>{linha.nome}</td>
                 <td>{linha.vocacao}</td>
                 <td>{linha.sexo}</td>
                 <td>{linha.level}</td>
                 <td>{linha.mundo}</td>
                 <td>{linha.residencia}</td>
-                <td><button className="btn btn-danger" onClick = { () => { props.removePersonagem(index) }}>Remover</button></td>
+                <td><button className="btn btn-danger" onClick = { () => { props.removeCharacter(linha.id) }}>Remover</button></td>
             </tr>
         );
     });
@@ -43,12 +43,12 @@ class Tabela extends Component {
 
     render() {
 
-        const { personagens, removePersonagem } = this.props;
+        const { characters, removeCharacter } = this.props;
 
         return (
             <table>
                 <TableHead />
-                <TableBody personagens = { personagens } removePersonagem = { removePersonagem } />
+                <TableBody characters = { characters } removeCharacter = { removeCharacter } />
             </table>
         );
     }

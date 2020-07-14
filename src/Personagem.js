@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import Header from './Header';
 import DataTable from './DataTable';
+import ApiService from './api/ApiService';
 
 class Personagem extends Component {
     
@@ -9,34 +10,25 @@ class Personagem extends Component {
         super (props);
 
         this.state = {
-          personagens: [
-            {
-                nome: 'Genji',
-                vocacao: 'Paladin',
-                sexo: 'male',
-                level: '100',
-                mundo: 'Belobora',
-                residencia: 'thais',
-            },
-            {
-                nome: 'Zenyatta',
-                vocacao: 'Druid',
-                sexo: 'male',
-                level: '500',
-                mundo: 'Gentebra',
-                residencia: 'thais',
-            }
-          ],
-          title: 'Personagens'
+          names: [],
+          title: 'characters'
         };
     }
+
+    componentDidMount() {
+      ApiService.ShowNames()
+                .then(res =>{
+                  this.setState({names: [...this.state.names, ...res.data]})
+                });
+    }
+
     render() {
         return (
           <Fragment>
               <Header />
               <div className="container">
                   <h1>Personagens</h1>
-                  <DataTable data={this.state.personagens} title={'Nome'} columns={['nome']} />
+                  <DataTable data={this.state.names} title={'Nome'} columns={['nome']} />
                   </div>
           </Fragment>
         );

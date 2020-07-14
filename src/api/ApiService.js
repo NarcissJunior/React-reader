@@ -1,10 +1,10 @@
 const ApiService = {
 
     //tentativa de criar uma variavel chamada base URL
-    //let baseUrl = "http://localhost:8000/api/";
+    // const baseUrl = "http://localhost:8000/api/";
 
     ShowCharacters: () => {
-        return fetch('http://localhost:8000/api/character')
+        return fetch('http://localhost:8000/api/autor')
             .then(res => res.json());
     },
 
@@ -14,7 +14,7 @@ const ApiService = {
     },
 
     ShowNames: () => {
-        return fetch('http://localhost:8000/api/character/name')
+        return fetch('http://localhost:8000/api/autor/nome')
             .then(res => res.json());
     },
 

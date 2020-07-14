@@ -13,47 +13,49 @@ import ApiService from './api/ApiService';
 
 class App extends Component {
 
-    state = {
-        personagens: [
-            {
-            nome: 'Genji',
-            vocacao: 'Paladin',
-            sexo: 'male',
-            level: '100',
-            mundo: 'Belobora',
-            residencia: 'thais',
-            },
-            {
-            nome: 'Zenyatta',
-            vocacao: 'Druid',
-            sexo: 'male',
-            level: '500',
-            mundo: 'Gentebra',
-            residencia: 'thais',
-            }
-        ]
-    };
+    constructor(props) {
+        super(props);
 
-    removePersonagem = index => {
+        this.state = {
+            characters: [],
+        };
+    }
 
-    const { personagens } = this.state;
+
+    removeCharacter = id => {
+
+    const { characters } = this.state;
 
     //Verifica qual foi a posição clicada (pois o array será percorrido em todas as posições)
     //Após isso, ele retorna quais posições deverão ser mantidas.
     this.setState(
         {
-            personagens : personagens.filter((personagem, posAtual) => {
+            characters : characters.filter((character) => {
             //quando o index for igual á posição atual (clicada) o elemento será retirado.
-            return posAtual !== index;
+            return character.id !== id;
             }),
         }
     );
     PopUp.showMessage("error", "Personagem removido com sucesso!");
-  }
 
-    submitListener = personagem => {
-        this.setState({ personagens : [...this.state.personagens, personagem] });
-        PopUp.showMessage("success", "Personagem adicionado com sucesso!");
+    ApiService.removeCharacter(id);
+   }
+
+    submitListener = character => {
+
+        ApiService.CreateCharacter(JSON.stringify(character))
+                                .then(res => res.data)
+                                .then(character => {
+                                    this.setState({ characters : [...this.state.characters, character] });
+                                    PopUp.showMessage("success", "Personagem adicionado com sucesso!");
+                                });
+    }
+
+    componentDidMount() {
+        ApiService.ShowCharacters()
+            .then(res => {
+                this.setState({ characters : [...this.state.characters, ...res.data ]});
+            });
     }
 
     render () {
@@ -62,7 +64,7 @@ class App extends Component {
                 <Header />
                 <div className="container mb-10">
                     <h1>React Reader</h1>
-                    <Tabela personagens = { this.state.personagens } removePersonagem = { this.removePersonagem } />
+                    <Tabela characters = { this.state.characters } removeCharacter = { this.removeCharacter } />
                     <Form submitListener = { this.submitListener } />
                 </div>
             </Fragment>
