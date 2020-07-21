@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import FormValidator from './FormValidator';
+import FormValidator from '../Utils/FormValidator';
 
-import PopUp from './PopUp';
+import PopUp from '../Utils/PopUp';
 
-import './App.css';
-import './css/Formulario.css';
+import '../css/App.css';
+import '../css/Formulario.css';
 
 const ColoredLine = ({ color }) => (
     <hr

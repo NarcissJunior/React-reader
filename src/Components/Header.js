@@ -1,7 +1,7 @@
 import React from 'react';
-import LinkWrapper from './LinkWrapper';
+import LinkWrapper from '../Utils/LinkWrapper';
 
-import Gm from './gamemaster.gif';
+import gm from '../img/gamemaster.gif';
 
 
 import { Navbar, Nav } from 'react-bootstrap'
@@ -14,13 +14,13 @@ const Header = () => {
             <Navbar.Brand href="/">
                 <img
                     alt=""
-                    src={Gm}
+                    src={gm}
                     width="30"
                     height="30"
                 />{' '}
                 React Reader
             </Navbar.Brand>
-            //consertar isso
+
             <Nav>
                 <Nav.Link>
                     <LinkWrapper to='/'>Home</LinkWrapper>

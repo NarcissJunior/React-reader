@@ -1,15 +1,15 @@
 import React, { Component, Fragment } from 'react';
-import './App.css';
+import './css/App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'materialize-css/dist/css/materialize.min.css';
 
-import Header from './Header';
-import Tabela from './Tabela';
-import Form from './Formulario';
-import PopUp from './PopUp';
+import Header from './Components/Header';
+import Tabela from './Components/Tabela';
+import Form from './Components/Formulario';
+import PopUp from './Utils/PopUp';
 
-import ApiService from './api/ApiService';
+import ApiService from './Api/ApiService';
 
 class App extends Component {
 
@@ -28,34 +28,39 @@ class App extends Component {
 
     //Verifica qual foi a posição clicada (pois o array será percorrido em todas as posições)
     //Após isso, ele retorna quais posições deverão ser mantidas.
-    this.setState(
-        {
-            characters : characters.filter((character) => {
-            //quando o index for igual á posição atual (clicada) o elemento será retirado.
-            return character.id !== id;
-            }),
-        }
-    );
-    PopUp.showMessage("error", "Personagem removido com sucesso!");
+    const updatedCharacters = characters.filter(character => {
+        return character.id !== id;
+    });
 
-    ApiService.removeCharacter(id);
+    ApiService.removeCharacter(id)
+                .then(res => {
+                    if(res.message === 'deleted') {
+                        this.setState({ characters : [...updatedCharacters]})
+                        PopUp.showMessage("error", "Personagem removido com sucesso!");
+                    }
+                })
+                .catch( err => PopUp.showMessage("error", "Erro ao remover o personagem"));
    }
 
     submitListener = character => {
-
         ApiService.CreateCharacter(JSON.stringify(character))
-                                .then(res => res.data)
-                                .then(character => {
-                                    this.setState({ characters : [...this.state.characters, character] });
-                                    PopUp.showMessage("success", "Personagem adicionado com sucesso!");
-                                });
+                    .then(res => {
+                        if(res.message === 'success') {
+                            this.setState({ characters : [...this.state.characters, res.data] });
+                            PopUp.showMessage("success", "Personagem adicionado com sucesso!");
+                        }
+                    })
+                    .catch(err => PopUp.showMessage("error", "O personagem não foi criado."));
     }
 
     componentDidMount() {
         ApiService.ShowCharacters()
-            .then(res => {
-                this.setState({ characters : [...this.state.characters, ...res.data ]});
-            });
+                .then(res => {
+                    if(res.message === 'success') {
+                        this.setState({ characters : [...this.state.characters, ...res.data ]});
+                    }
+                })
+            .catch(err => PopUp.showMessage("error", "Erro ao carregar a lista de personagens."));
     }
 
     render () {

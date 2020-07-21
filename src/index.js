@@ -5,9 +5,9 @@ import App from './App';
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Sobre from './Sobre';
-import Personagem from './Personagem';
-import NotFound from './NotFound';
+import Sobre from './Pages/Sobre';
+import Personagem from './Pages/Personagem';
+import NotFound from './Pages/NotFound';
 
 import * as serviceWorker from './serviceWorker';
 
